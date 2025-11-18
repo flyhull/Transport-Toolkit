@@ -1,0 +1,10 @@
+{
+  "Root": {
+    "Group": "R1",
+    "HubUrl": "http://localhost:606/ChatHub",
+    "PassPhrase": "Right One Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "SecretDate": "1968-06-05",
+    "Pattern": "Stripes",
+    "Color": "Magenta"
+  }
+}

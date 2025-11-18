@@ -1,0 +1,10 @@
+{
+  "Root": {
+    "Group": "EU",
+    "HubUrl": "http://localhost:666/ChatHub",
+    "PassPhrase": "East Users Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "SecretDate": "1968-06-05",
+    "Pattern": "Stripes",
+    "Color": "Magenta"
+  }
+}
