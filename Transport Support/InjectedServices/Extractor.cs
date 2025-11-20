@@ -181,23 +181,22 @@ namespace Transport_Support
                             }
                             else // endpoint
                             {
-
-                                // add local key layer here
+                                // we know that this is meant for a recipient on this hub because it decrypted
 
                                 DateTime rightNow = DateTime.UtcNow;
                                 validation = new ValidationSummary();
+                                ResultObject TrackingResult = new ResultObject();
 
                                 logger.LogInformation("Will decrypt using key for sender and guessed encryption timestamp of " + rightNow.AddSeconds(-1 * TransportSupport.getMinimumDelayInSeconds()).ToString("u").Replace(":", string.Empty));
 
                                 ResultObject FullyDecryptedPayload = UseTimeToStatically.Decrypt(DecryptPayloadImage.Bytes, localKey.UserPassPhrase.bytes, localKey.UserSecretDate.Timestamp, rightNow, 2, TransportSupport.getMaximumTransitTimeInSeconds(), TransportSupport.getMinimumTransitTimeInSeconds(), TimeBasedCryptionLimits.MinimumArgon2MemorySize, TimeBasedCryptionLimits.MinimumArgon2NumberOfPasses, validation);
 
-                                // xxxxxxxxxxxx need to fix xxxxxxxxxx
-
-
                                 DecryptPayloadImage.Redact();
                                
                                 if (FullyDecryptedPayload.Worked)
-                                {                               
+                                {       
+                                    // now we know that this is meant for this recipient
+
                                     switch (format)
                                     {
                                         case Image_Support.ImageOutputFormat.base64:
@@ -207,11 +206,9 @@ namespace Transport_Support
                                             break;
                                         case Image_Support.ImageOutputFormat.file:
 
-                                            ResultObject TrackingResult = new ResultObject();
-
                                             logger.LogWarning("Message length is " + FullyDecryptedPayload.Bytes.Length.ToString() + " bytes");
-
-                                            if (messageTracker.Tracking && FullyDecryptedPayload.Bytes.Length == messageTracker.RncryptedReceiptMessageLength)
+                                            
+                                            if (messageTracker.Tracking && FullyDecryptedPayload.Bytes.Length == messageTracker.EncryptedReceiptMessageLength)
                                             {
                                                 TrackingResult = messageTracker.Received(FullyDecryptedPayload.Bytes);
 
@@ -249,7 +246,29 @@ namespace Transport_Support
                                 }
                                 else
                                 {
+                                    // here we pretend that the message was for us unless it was a receipt
+
+                                    if (messageTracker.Tracking && DecryptPayloadImage.Bytes.Length == messageTracker.EncryptedReceiptMessageLength)
+                                    {
+                                        logger.LogInformation("Message is a receipt for someone else");
+                                    }
+                                    else
+                                    {
+                                        // write receipt for message that was not sent (which will be ignored)
+                                        TrackingResult = messageTracker.Received(DecryptPayloadImage.Bytes);
+
+                                        if (TrackingResult.Worked)
+                                        {
+                                            logger.LogInformation("Sent receipt as if it was for us");
+                                        }
+                                        else
+                                        {
+                                            logger.LogInformation("Failed to send receipt as if it was for us");
+                                        }
+                                    }
+
                                     result = FullyDecryptedPayload;
+
                                     logger.LogInformation("Message is for someone else on this hub");
                                 }
                             }

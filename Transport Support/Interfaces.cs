@@ -22,7 +22,7 @@ namespace Transport_Support
             get;
         }
 
-        Int32 RncryptedReceiptMessageLength
+        Int32 EncryptedReceiptMessageLength
         {
             get;
         }

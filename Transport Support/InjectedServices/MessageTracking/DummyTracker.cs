@@ -18,7 +18,7 @@ namespace Transport_Support
             get { return false; }
         }
 
-        public int RncryptedReceiptMessageLength
+        public int EncryptedReceiptMessageLength
         {
             get { return -1; }
         }

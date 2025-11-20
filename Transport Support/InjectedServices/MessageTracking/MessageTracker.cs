@@ -54,7 +54,7 @@ namespace Transport_Support
             get { return _userSecretDate; }
         }
 
-        public Int32 RncryptedReceiptMessageLength
+        public Int32 EncryptedReceiptMessageLength
         {
             get { return 48; }
         }

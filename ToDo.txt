@@ -2,4 +2,5 @@
 Finish Keyless Hub
 Create Keyless network
 Encrypt temp file in caching hub 
-Support generic message acknowledgement
+Stack cryption times
+add commercial use switch
