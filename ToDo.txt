@@ -2,5 +2,6 @@
 Finish Keyless Hub
 Create Keyless network
 Encrypt temp file in caching hub 
+Replace MD5 with salted hashes
 Stack cryption times
-add commercial use switch
+Add commercial use switch
