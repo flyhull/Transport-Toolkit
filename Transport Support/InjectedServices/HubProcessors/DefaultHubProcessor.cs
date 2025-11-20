@@ -10,7 +10,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace Transport_Support
 {
-    class DefaultHubProcessor : IHubProcessor
+    public class DefaultHubProcessor : IHubProcessor
     {
         private readonly RoutedMessageAction action = RoutedMessageAction.SendImmediate;
         private readonly byte[] fuzz = new byte[24];

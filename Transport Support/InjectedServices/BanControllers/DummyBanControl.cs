@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Transport_Support
 {
-    internal class DummyBanControl : IHubBanManager, IClientBanManager
+    public class DummyBanControl : IHubBanManager, IClientBanManager
     {
         public bool IBan
         {
